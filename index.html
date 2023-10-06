@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Globe</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>Hello World! - Tasviq</h1>
+            <span>Click & Drag to Rotate</span>
+        </div>
+    </header>
+    <main>
+        <form>
+            <div class="form-control">
+
+                <label for="tilt-angle">Tilt:</label>
+                <input type="range" id="tilt-angle" min="0" max="360" step="1" value="0">
+                <span id="tilt-value">0°</span>
+
+                <select name="country" id="country">
+                    <option value="" disabled selected>Visit a country</option>    
+                </select>
+
+                <label for="speed"></label>
+                <input type="range" id="speedInput" min="1000" max="10000" step="100" value="1000">
+                <span id="speed-value">1000</span>
+
+            </div>              
+        </form>
+        <svg></svg> <!-- Place the SVG directly within the main element -->
+    </main>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <script type="text/javascript" src="countries.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>

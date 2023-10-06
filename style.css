@@ -1,0 +1,93 @@
+body {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #3acad711;
+}
+
+/* Adjust the font for the h1 element */
+.logo h1 {
+    font-family: "Lucida Handwriting", sans-serif;
+    font-size: 3vw; /* Responsive font size */
+    margin-bottom: 0;
+    margin-top: 1vw; /* Responsive margin */
+}
+
+/* Adjust the font for the span element */
+.logo span {
+    font-family: "Calibri", sans-serif;
+    font-size: 1vw; /* Responsive font size */
+}
+
+header {
+    color: #333;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 0.3vw; /* Responsive padding */
+    text-align: center;
+    box-shadow: 0px 3px 55px rgba(0, 0, 0, 0.1);
+}
+
+/* Define a custom font or use a built-in font family */
+.form-control label,
+.form-control input,
+.form-control select,
+.form-control span {
+    font-family: "Palatino", serif;
+    font-size: 2vw;
+    /* Additional font properties (size, weight, etc.) can be added as needed */
+}
+
+
+.form-control {
+    margin: 1vw 0; /* Responsive margin */
+}
+
+.form-control button:hover {
+    background-color: darkblue;
+}
+
+.logo {
+    padding: 0;
+    font-size: 1vw; /* Responsive font size */
+}
+
+#country {
+    margin-right: 3vw; /* Responsive margin */
+    margin-left: 3vw; /* Responsive margin */
+    padding: 1vw;
+    width: 100%;
+    max-width: 150px;
+    border-radius: 2vw;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    font-size: 1vw; /* Responsive font size */
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Position the dropdown at the top */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 0.1vw; /* Responsive padding */
+}
+
+/* Define the blinking animation with multiple levels */
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    25%, 75% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Apply the animation to the blinking-marker class with a duration of 1s */
+.blinking-marker {
+    animation: blink 0.8s infinite;
+}

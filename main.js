@@ -132,6 +132,45 @@ function drawGlobe() {
         });
 }
 
+//Outline latitude and longitude lines with d3.geoGraticule()
+function drawLatLongLines() {
+    const graticule = d3.geoGraticule()
+        .step([10, 10]);
+
+    svg.append("path")
+        .datum(graticule)
+        .attr("class", "graticule")
+        .attr("d", path)
+        .style("fill", "#fff")
+        .style("stroke", "#e3e3");
+}
+
+
+// Rotates to the selected country and places a pointer
+function visitCountry(lat, lng) {
+
+    // use transition with tween for the animation
+    d3.transition()
+        .duration(1000)
+        .tween("rotate", function () {
+            // get an interpolator from the current coordinates (view) to the selected country -> needed for the animation
+            const r = d3.interpolate([-gCurrentLng, -gCurrentLat], [-lng, -lat]);
+            // use the interpolator to rotate step by step with the animation
+            return function (t) {
+                projection.rotate(r(t));
+                svg.selectAll("path").attr("d", path);
+            };
+        })
+        .on("end", () => {
+            // draw the marker
+            placePointer(lat, lng), // save current coordinates to gCurrentLat and gCurrentLng to use them as starting point for the next interpolation
+            // override the globals gCurrentLat and gCurrentLng to use them for the next rotation
+            gCurrentLat = lat
+            gCurrentLng = lng
+        })
+}
+
+
 
 /** 
  * Permission is hereby granted, free of charge, to any person obtaining a copy

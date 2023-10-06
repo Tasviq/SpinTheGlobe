@@ -171,6 +171,59 @@ function visitCountry(lat, lng) {
 }
 
 
+// draws a red circle at the latitude and longitude coordinates
+function placePointer(lat, lng) {
+    globeConfig.continuousRotation = false;
+
+    // Define a filter for creating a shadow effect
+    const filter = svg.append("filter")
+        .attr("id", "marker-shadow")
+        .attr("x", "-50%")
+        .attr("y", "-50%")
+        .attr("width", "200%")
+        .attr("height", "200%");
+    filter.append("feOffset")
+        .attr("result", "offOut")
+        .attr("in", "SourceAlpha")
+        .attr("dx", 2) // Adjust the shadow's horizontal offset
+        .attr("dy", 2) // Adjust the shadow's vertical offset
+    filter.append("feGaussianBlur")
+        .attr("result", "blurOut")
+        .attr("in", "offOut")
+        .attr("stdDeviation", 3); // Adjust the blur level for the shadow
+    filter.append("feBlend")
+        .attr("in", "SourceGraphic")
+        .attr("in2", "blurOut")
+        .attr("mode", "normal");
+
+    // Create the marker circle and apply the shadow filter
+    const marker = svg.append("circle")
+        .attr('cx', projection([lng, lat])[0])
+        .attr('cy', projection([lng, lat])[1])
+        .attr('fill', 'red')
+        .attr('r', 6)
+        .attr('filter', 'url(#marker-shadow)'); // Apply the shadow filter
+
+    // Add a class to the marker for styling
+    marker.attr('class', 'blinking-marker');
+}
+
+
+function populateCountryOptions() {
+    countries.forEach(country => {
+        const option = document.createElement('option');
+        option.value = country.name;
+        option.textContent = country.name;
+        countryInput.appendChild(option);
+    });
+}
+
+// When selected country changes
+function updateSelectedCountry(e) {
+    const selectedCountry = countries.find((country) => country.name === e.target.value);
+    visitCountry(selectedCountry.latitude, selectedCountry.longitude)
+}
+
 
 /** 
  * Permission is hereby granted, free of charge, to any person obtaining a copy

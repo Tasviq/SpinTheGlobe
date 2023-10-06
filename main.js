@@ -77,6 +77,38 @@ function startContinuousRotation(speed) {
 }
 
 
+svg.on("mousedown", function () {
+    globeConfig.continuousRotation = false;
+    globeConfig.isDragging = true;
+    dragStartCoords = d3.mouse(this);
+});
+
+svg.on("mousemove", function () {
+    if (globeConfig.isDragging) {
+        const dragEndCoords = d3.mouse(this);
+        const dx = dragEndCoords[0] - dragStartCoords[0];
+        const dy = dragEndCoords[1] - dragStartCoords[1];
+
+        // Adjust the rotation angles based on the mouse movement
+        const rotation = projection.rotate();
+        const newRotation = [
+            rotation[0] + dx / 2,
+            rotation[1] - dy / 2, // Invert dy to match the globe's orientation
+            rotation[2]
+        ];
+
+        projection.rotate(newRotation);
+        svg.selectAll("path").attr("d", path);
+
+        // Update the drag start coordinates for the next movement
+        dragStartCoords = dragEndCoords;
+    }
+});
+
+svg.on("mouseup", function () {
+    globeConfig.isDragging = false;
+});
+
 
 /** 
  * Permission is hereby granted, free of charge, to any person obtaining a copy

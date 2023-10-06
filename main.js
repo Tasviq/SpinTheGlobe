@@ -39,6 +39,44 @@ tiltAngleInput.addEventListener('input', function () {
 });
 
 
+// Get references to the speed slider and value elements
+const speedSlider = document.getElementById('speedInput');
+const speedValue = document.getElementById('speed-value');
+
+// Initialize the speed value with the slider's initial value
+speedValue.textContent = speedSlider.value + ' MPH';
+
+// Add an event listener to the slider to update the value when it changes
+speedSlider.addEventListener('input', function () {
+    // Get the current speed value from the slider
+    let speed = parseFloat(this.value);
+
+    // Update the displayed speed value
+    speedValue.textContent = speed + ' MPH';
+  
+    // Update the continuous rotation speed (adjust the timeout for rotation speed)
+    startContinuousRotation(speed);
+});
+
+
+// Start the continuous rotation
+startContinuousRotation(globeConfig.initialRotationSpeed);
+// Function to start continuous rotation with the specified speed
+function startContinuousRotation(speed) {
+  if (globeConfig.continuousRotation ) {
+    let speedTaken = speed/500;
+    projection.rotate([projection.rotate()[0] + speedTaken, projection.rotate()[1], projection.rotate()[2]]);
+    svg.selectAll('path').attr('d', path);
+
+    // Adjust the timeout for rotation speed
+    const rotationInterval = 10 / speed;
+    setTimeout(function () {
+      startContinuousRotation(speed);
+    }, rotationInterval);
+  }
+}
+
+
 
 /** 
  * Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -110,6 +110,29 @@ svg.on("mouseup", function () {
 });
 
 
+drawGlobe();
+drawLatLongLines();
+populateCountryOptions();
+
+// Using d3 polygon: https://gist.githubusercontent.com/mbostock/4090846/raw/d534aba169207548a8a3d670c9c2cc719ff05c47/world-110m.json
+function drawGlobe() {
+    d3.queue()
+        .defer(d3.json, 'https://gist.githubusercontent.com/mbostock/4090846/raw/d534aba169207548a8a3d670c9c2cc719ff05c47/world-110m.json')
+        .await((error, worldData, locationData) => {
+            svg.selectAll(".segment")
+                .data(topojson.feature(worldData, worldData.objects.countries).features)
+                .enter().append("path")
+                .attr("class", "segment")
+                .attr("d", path)
+                .style("stroke", "#808080")
+                .style("stroke-width", "1px")
+                .style("fill", (d, i) => '#000')
+                .style("opacity", ".8");
+            locations = locationData;
+        });
+}
+
+
 /** 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal

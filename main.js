@@ -22,6 +22,23 @@ countryInput.addEventListener('change', updateSelectedCountry)
 // will be the inital viewpoint for the d3.interpolate in the visitCountry() function
 let [gCurrentLat, gCurrentLng] = projection.invert(origin);
 
+// Add an event listener to the tilt angle input
+const tiltAngleInput = document.getElementById('tilt-angle');
+tiltAngleInput.addEventListener('input', function () {
+  // Get the current tilt angle value from the input
+  const tiltAngleDegrees = parseFloat(this.value);
+
+  // Modify the projection's rotation to include the new tilt angle
+  projection.rotate([projection.rotate()[0], projection.rotate()[1], tiltAngleDegrees]);
+
+  // Redraw the globe
+  svg.selectAll("path").attr("d", path);
+
+  // Update the displayed tilt angle value
+  document.getElementById('tilt-value').textContent = `${tiltAngleDegrees}°`;
+});
+
+
 
 /** 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
